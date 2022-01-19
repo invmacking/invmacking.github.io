@@ -62,7 +62,7 @@
 <p>15号放假回家到现在一直摆烂 这篇文章其实是元旦的时候就在写 不过当时只打到了第二台 今天才接着之前的进度继续弄 等这几天约完hxd 真要好好学习了 一起加油叭！</p>
 <h3 id="teamssix-com的多重内网环境靶场"><a href="#teamssix-com的多重内网环境靶场" class="headerlink" title="teamssix.com的多重内网环境靶场"></a>teamssix.com的多重内网环境靶场</h3><p>利用NAT连接本机的kali作为攻击机 已知目标机器第一台机器有两个网段 一个公网ip一个内网ip</p>
 <p>以此公网ip作为突破点 打入内网</p>
-<p>探测端口</p>
+<h3 id="第一台机器"><a href="#第一台机器" class="headerlink" title="第一台机器"></a>第一台机器</h3><p>探测端口</p>
 <p>nmap -T4 -sV 192.168.10.8</p>
 <p>发现开了 80端口 那就可以从web入手 访问网址 是<strong>thinkphp5.0</strong></p>
 <blockquote>
@@ -96,7 +96,7 @@
 <p>exploit</p>
 <p>vim /etc/proxychains4.conf 改socks ip</p>
 <p>之后每一步都需要带上proxychains</p>
-<p>开始第二台机器 继续先扫描端口</p>
+<h3 id="第二台机器"><a href="#第二台机器" class="headerlink" title="第二台机器"></a>第二台机器</h3><p>开始第二台机器 继续先扫描端口</p>
 <p>proxychains  nmap -Pn -sT 192.168.22.128</p>
 <p>同样存在宝塔</p>
 <p>proxychains firefox 访问网址 也可以本机代理访问 sockscap </p>
@@ -105,7 +105,7 @@
 <p><strong>直接sqlmap梭哈</strong> admin 123qwe</p>
 <p>进入后台 先看模板 存在文件上传漏洞 </p>
 <p>一句话 蚁剑连接（需要代理proxychains 或者 代理软件）</p>
-<p>重复之前步骤 生成msf马 开启监听 配置路由 内网带来</p>
+<h3 id="第三台机器"><a href="#第三台机器" class="headerlink" title="第三台机器"></a>第三台机器</h3><p>重复之前步骤 生成msf马 开启监听 配置路由 内网带来</p>
 <p> arp -a 发现存在另一网段 33</p>
 <p> 扫描端口 没有80 根据其他端口盲打exp</p>
 <p>445 打永恒之蓝</p>
